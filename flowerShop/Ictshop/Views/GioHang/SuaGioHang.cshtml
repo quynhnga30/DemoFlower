@@ -1,0 +1,73 @@
+﻿@using Ictshop.Models;
+@model List<GioHang>
+
+@{
+    ViewBag.Title = "GioHang";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<center><h2 class="text-info"> Edit Cart </h2></center>
+
+<table class="table-bordered font-italic divGioHang">
+    <tr>
+        <th> MSP </th>
+
+        <th> Product Name </th>
+
+        <th> Img </th>
+
+        <th> Price </th>
+
+        <th> Quantity </th>
+
+        <th> Total </th>
+    </tr>
+
+
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td> @item.iMasp</td>
+
+            <td> @item.sTensp</td>
+
+            <td> <img src="@Url.Content("~" +item.sAnhBia)" width="50" height="50" /></td>
+
+            <td>  @String.Format("{0:0,0}", item.dDonGia) $</td>
+
+            @*Chỉnh sửa giỏ hàng gọi về action CapNhatGioHang*@
+            @using (Html.BeginForm("CapNhatGioHang", "GioHang", new { @iMaSP = item.iMasp }))
+            {
+                <td>@Html.TextBox("txtSoLuong", item.iSoLuong) </td>
+
+                <td>@String.Format("{0:0,0}", item.ThanhTien) $</td>
+                <td>
+                    <input type="submit" value="Update " class="btn-secondary" />
+                    <br />
+                    @*Xóa giỏ hàng gọi về Action XoaGioHang*@
+                    <button class="btn-success">@Html.ActionLink("Xóa", "XoaGioHang", new { @iMaSP = item.iMasp })</button>
+                </td>
+            }
+
+        </tr>
+    }
+</table>
+
+@*Css giỏ hàng*@
+<style type="text/css">
+    .divGioHang {
+        border: 2px solid #EEEEEE;
+        margin-left: 10%;
+        font-size: large
+    }
+
+        .divGioHang td {
+            padding: 10px;
+            border: 2px solid #EEEEEE;
+            text-align: center
+        }
+
+        .divGioHang th {
+            text-align: center
+        }
+</style>
